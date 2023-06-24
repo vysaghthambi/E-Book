@@ -1,41 +1,23 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useMemo } from "react";
 import { useParams } from "react-router-dom";
 
 import PageForm from "../PageForm";
 import { PAGES_ITEM, PageType } from "../../types";
+import { usePages } from "../Pages";
 
 export default function EditPage() {
   const { pageId } = useParams();
 
   if (!pageId) throw new Error("Page Id not found");
 
-  const [pages, setPages] = useState<PageType[] | null>(null);
-  const [defaultValues, setDefaultValues] = useState<PageType | null>(null);
-  const [pageNotFound, setPageNotFound] = useState<boolean>(false);
+  const { pages, pagesMap } = usePages();
 
-  useEffect(() => {
-    const storedPages = localStorage.getItem(PAGES_ITEM);
-
-    if (storedPages) setPages(JSON.parse(storedPages));
-  }, [pageId]);
-
-  useEffect(() => {
-    if (!pages) return;
-
-    const selectedPage = pages.find(page => page.id === pageId);
-
-    setPageNotFound(!selectedPage);
-    setDefaultValues(selectedPage ?? null);
-  }, [pageId, pages]);
+  const selectedPage = useMemo(() => pagesMap.get(pageId), [pageId, pagesMap])
 
   const onSubmit = useCallback((data: PageType) => {
     return new Promise((resolve, reject) => {
       try {
-        if (!pages) return;
-
-        const filteredData = pages.filter(page => page.id !== pageId);
-
-        const updatedData = [...filteredData, data];
+        const updatedData = pages.map(page => page.id === pageId ? { ...page, ...data } : page);
 
         localStorage.setItem(PAGES_ITEM, JSON.stringify(updatedData));
 
@@ -48,11 +30,9 @@ export default function EditPage() {
 
   return (
     <>
-      {defaultValues && <PageForm defaultValues={defaultValues} onSubmit={onSubmit} />}
+      {selectedPage && <PageForm defaultValues={selectedPage} onSubmit={onSubmit} />}
 
-      {!defaultValues && !pageNotFound && <>loading...</>}
-
-      {pageNotFound && <>page not found</>}
+      {!selectedPage && <>page not found</>}
     </>
   );
 }

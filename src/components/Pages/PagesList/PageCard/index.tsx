@@ -1,4 +1,4 @@
-import { PageType } from "../../../types"
+import { PageType } from "../../../../types"
 
 type PageCardPropsType = { page: PageType }
 

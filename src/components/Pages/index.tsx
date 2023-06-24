@@ -1,43 +1,58 @@
-import { useEffect, useState } from "react"
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { createContext, useContext, useEffect, useMemo, useState } from "react"
+import { Outlet } from "react-router-dom";
 
 import { PAGES_ITEM, PageType } from "../../types"
-import PageCard from "./PageCard";
+import PagesList from "./PagesList";
+
+type PagesContextType = {
+  pages: PageType[];
+  pagesMap: Map<string, PageType>;
+};
+
+const PagesContext = createContext<PagesContextType | null>(null);
+
+export function usePages() {
+  return useContext(PagesContext) as PagesContextType;
+}
 
 export default function Pages() {
-  const { pageId } = useParams();
-
-  const navigate = useNavigate();
-
   const [pages, setPages] = useState<PageType[] | null>(null);
 
   useEffect(() => {
     const storedPages = localStorage.getItem(PAGES_ITEM);
 
-    setPages(storedPages ? JSON.parse(storedPages) : []);
+    if (!storedPages) return;
+
+    const parsedData = JSON.parse(storedPages);
+    setPages(parsedData ? parsedData : []);
   }, []);
 
-  useEffect(() => {
-    if (!pages?.length) return;
-    if (pageId) return;
+  const pagesMap = useMemo(() => {
+    if (!pages) return undefined;
 
-    navigate(pages[0].id);
-  }, [navigate, pageId, pages]);
+    return new Map(pages.map(page => [page.id, page]));
+  }, [pages])
+
+  const pagesContext = useMemo<PagesContextType | undefined>(() => {
+    if (!pages || !pagesMap) return undefined;
+
+    return { pages, pagesMap }
+  }, [pages, pagesMap])
 
   return (
     <>
       {pages &&
-        <div>
+        pagesContext &&
+        <PagesContext.Provider value={pagesContext}>
           <div>
-            {pages.map((page) => (
-              <PageCard key={page.id} page={page} />
-            ))}
+            <div>
+              <PagesList />
+            </div>
+            <div>
+              <Outlet />
+            </div>
           </div>
-
-          <div>
-            <Outlet />
-          </div>
-        </div>
+        </PagesContext.Provider>
       }
 
       {!pages && <>loading...</>}
