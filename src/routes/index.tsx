@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import AddPage from "../components/AddPage";
 import Pages from "../components/Pages";
 import PageContent from "../components/PageContent";
+import EditPage from "../components/EditPage";
 
 export default function AppRouter() {
   return (
@@ -12,6 +13,7 @@ export default function AppRouter() {
         <Route path="pages" element={<Pages />}>
           <Route index element={null} />
           <Route path=":pageId" element={<PageContent />} />
+          <Route path=":pageId/edit" element={<EditPage />} />
         </Route>
         <Route path="add" element={<AddPage />} />
       </Routes>
