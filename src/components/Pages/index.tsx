@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 
-import { PageType } from "../../types"
+import { PAGES_ITEM, PageType } from "../../types"
 import PageCard from "./PageCard";
 
 export default function Pages() {
@@ -12,7 +12,7 @@ export default function Pages() {
   const [pages, setPages] = useState<PageType[] | null>(null);
 
   useEffect(() => {
-    const storedPages = localStorage.getItem("pages");
+    const storedPages = localStorage.getItem(PAGES_ITEM);
 
     setPages(storedPages ? JSON.parse(storedPages) : []);
   }, []);

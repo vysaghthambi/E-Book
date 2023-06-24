@@ -3,3 +3,5 @@ export type PageType = {
     title: string;
     content: string;
 }
+
+export const PAGES_ITEM = "pages";

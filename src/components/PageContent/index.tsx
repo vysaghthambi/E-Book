@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import parse from "html-react-parser";
 
-import { PageType } from "../../types";
+import { PAGES_ITEM, PageType } from "../../types";
 
 export default function PageContent() {
   const { pageId } = useParams();
@@ -14,7 +14,7 @@ export default function PageContent() {
   const [pageNotFound, setPageNotFound] = useState<boolean>(false);
 
   useEffect(() => {
-    const storedPages = localStorage.getItem("pages");
+    const storedPages = localStorage.getItem(PAGES_ITEM);
 
     if (!storedPages) return;
 

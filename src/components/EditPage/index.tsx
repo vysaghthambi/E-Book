@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import PageForm from "../PageForm";
-import { PageType } from "../../types";
+import { PAGES_ITEM, PageType } from "../../types";
 
 export default function EditPage() {
   const { pageId } = useParams();
@@ -14,10 +14,10 @@ export default function EditPage() {
   const [pageNotFound, setPageNotFound] = useState<boolean>(false);
 
   useEffect(() => {
-    const storedPages = localStorage.getItem("pages");
+    const storedPages = localStorage.getItem(PAGES_ITEM);
 
     if (storedPages) setPages(JSON.parse(storedPages));
-  }, [pageId])
+  }, [pageId]);
 
   useEffect(() => {
     if (!pages) return;
@@ -26,7 +26,7 @@ export default function EditPage() {
 
     setPageNotFound(!selectedPage);
     setDefaultValues(selectedPage ?? null);
-  }, [pageId, pages])
+  }, [pageId, pages]);
 
   const onSubmit = useCallback((data: PageType) => {
     return new Promise((resolve, reject) => {
@@ -37,14 +37,14 @@ export default function EditPage() {
 
         const updatedData = [...filteredData, data];
 
-        localStorage.setItem("pages", JSON.stringify(updatedData));
+        localStorage.setItem(PAGES_ITEM, JSON.stringify(updatedData));
 
         resolve("Page Edited Successfully");
       } catch (error) {
         reject(error);
       }
     })
-  }, [pageId, pages])
+  }, [pageId, pages]);
 
   return (
     <>
@@ -54,5 +54,5 @@ export default function EditPage() {
 
       {pageNotFound && <>page not found</>}
     </>
-  )
+  );
 }

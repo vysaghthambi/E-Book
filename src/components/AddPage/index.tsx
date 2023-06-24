@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { v4 as uuid } from "uuid";
 
 import PageForm from "../PageForm";
-import { PageType } from "../../types";
+import { PAGES_ITEM, PageType } from "../../types";
 
 export default function AddPage() {
   const id = uuid();
@@ -12,7 +12,7 @@ export default function AddPage() {
   const onSubmit = useCallback((data: PageType) => {
     return new Promise((resolve, reject) => {
       try {
-        const pages = localStorage.getItem("pages");
+        const pages = localStorage.getItem(PAGES_ITEM);
 
         let updatedPages: PageType[];
 
@@ -22,7 +22,7 @@ export default function AddPage() {
           updatedPages = [data];
         }
 
-        localStorage.setItem("pages", JSON.stringify(updatedPages));
+        localStorage.setItem(PAGES_ITEM, JSON.stringify(updatedPages));
 
         resolve("Added page successfully");
       } catch (error) {
