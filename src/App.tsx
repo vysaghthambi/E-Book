@@ -8,7 +8,9 @@ function App() {
   return (
     <div>
       <Header />
-      <Outlet />
+      <div className="container mt-4">
+        <Outlet />
+      </div>
     </div>
   );
 }

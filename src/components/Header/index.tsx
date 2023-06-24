@@ -1,6 +1,6 @@
 export default function Header() {
   return (
-    <nav className="navbar bg-body-tertiary">
+    <nav className="navbar bg-body-secondary">
       <div className="container justify-content-between">
         <div>
           <a className="navbar-brand" href="/">E-Book</a>
