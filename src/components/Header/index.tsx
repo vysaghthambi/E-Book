@@ -15,7 +15,7 @@ export default function Header() {
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <i className="fas fa-user"></i> UserName
+            <i className="fas fa-user fa-xl me-1"></i> UserName
           </div>
 
           <ul className="dropdown-menu">

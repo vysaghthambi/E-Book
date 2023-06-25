@@ -32,9 +32,9 @@ export default function PageContent() {
 
       {selectedPage &&
         <div className="overflow-auto page-content mb-3 flex-fill">
-          <div className="d-flex justify-content-center mb-3">
-            <div className="page-title">{selectedPage?.title}</div>
-            <div role="button" onClick={handleEditPage}>Edit</div>
+          <div className="d-flex justify-content-center align-items-center mb-3">
+            <div className="page-title me-3">{selectedPage?.title}</div>
+            <div role="button" onClick={handleEditPage}><i className="fas fa-pen-to-square"></i></div>
           </div>
           <div>{parse(selectedPage.content)}</div>
         </div>
@@ -46,6 +46,7 @@ export default function PageContent() {
         className="text-end me-3 mb-3"
       >
         Add New Page
+        <i className="fa-solid fa-plus ms-2"></i>
       </div>
 
     </div>
