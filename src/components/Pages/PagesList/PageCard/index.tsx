@@ -22,7 +22,10 @@ export default function PageCard({ page }: PageCardPropsType) {
 		<div
 			role="button"
 			onClick={handleClick}
-			className={clsx("page-card", { "bg-primary": isActive })}
+			className={clsx(
+				"page-card text-primary",
+				{ "bg-primary text-white active": isActive }
+			)}
 		>
 			{page.title}
 		</div>

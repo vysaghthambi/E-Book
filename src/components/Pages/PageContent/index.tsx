@@ -5,6 +5,8 @@ import parse from "html-react-parser";
 
 import { usePages } from "..";
 
+import './styles.css';
+
 export default function PageContent() {
   const { pageId } = useParams();
 
@@ -25,23 +27,23 @@ export default function PageContent() {
   }, [navigate])
 
   return (
-    <div className="d-flex flex-column flex-fill p-3">
+    <div className="d-flex flex-column flex-fill">
       {!selectedPage && <>Page Not Found</>}
 
       {selectedPage &&
-        <>
-          <div className="d-flex justify-content-center">
-            <div>{selectedPage?.title}</div>
+        <div className="overflow-auto page-content mb-3 flex-fill">
+          <div className="d-flex justify-content-center mb-3">
+            <div className="page-title">{selectedPage?.title}</div>
             <div role="button" onClick={handleEditPage}>Edit</div>
           </div>
-          <div className="flex-fill">{parse(selectedPage.content)}</div>
-        </>
+          <div>{parse(selectedPage.content)}</div>
+        </div>
       }
 
       <div
         role="button"
         onClick={handleAddPage}
-        className="text-end"
+        className="text-end me-3 mb-3"
       >
         Add New Page
       </div>

@@ -1,14 +1,25 @@
 .page-card {
   padding: 15px 10px;
   position: relative;
+
+  font: normal normal 700 18px/22px Roboto;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
 }
 
 .page-card::after {
   content: '';
   position: absolute;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 10%;
+  right: 10%;
+  width: 80%;
   height: 1px;
-  background-color: black;
+  background-color: #ddd;
+}
+
+.page-card.active {
+  font: normal normal 700 18px/22px Roboto;
+  color: #fff;
 }

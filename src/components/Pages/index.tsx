@@ -27,10 +27,12 @@ export default function Pages() {
   }, [])
 
   useEffect(() => {
-    console.log("inside")
     const storedPages = localStorage.getItem(PAGES_ITEM);
 
-    if (!storedPages) return;
+    if (!storedPages) {
+      setPages([]);
+      return;
+    };
 
     const parsedData = JSON.parse(storedPages);
     setPages(parsedData ? parsedData : []);
@@ -50,21 +52,28 @@ export default function Pages() {
 
   return (
     <>
-      {pages &&
+      {!pages && <>loading...</>}
+
+      {!!pages?.length &&
         pagesContext &&
         <PagesContext.Provider value={pagesContext}>
-          <div className="d-flex flex-fill bg-white">
-            <div className="pagelist bg-primary bg-opacity-25">
+          <div className="d-flex h-100 bg-white">
+            <div className="pagelist overflow-auto left-container">
               <PagesList />
             </div>
-            <div className="d-flex flex-fill">
+            <div className="d-flex flex-fill right-container">
               <Outlet />
             </div>
           </div>
         </PagesContext.Provider>
       }
 
-      {!pages && <>loading...</>}
+      {!pages?.length &&
+        <div className="d-flex flex-column justigy-content-center align-items-center bg-white p-5">
+          <div>No Pages Found</div>
+          <a href="/add">Click here to add new page</a>
+        </div>
+      }
     </>
   );
 }

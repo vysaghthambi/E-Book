@@ -10,7 +10,7 @@ export default function EditPage() {
 
   if (!pageId) throw new Error("Page Id not found");
 
-  const { pages, pagesMap } = usePages();
+  const { pages, pagesMap, handlePageUpdate } = usePages();
 
   const selectedPage = useMemo(() => pagesMap.get(pageId), [pageId, pagesMap])
 
@@ -21,12 +21,14 @@ export default function EditPage() {
 
         localStorage.setItem(PAGES_ITEM, JSON.stringify(updatedData));
 
+        handlePageUpdate();
+
         resolve("Page Edited Successfully");
       } catch (error) {
         reject(error);
       }
     })
-  }, [pageId, pages]);
+  }, [handlePageUpdate, pageId, pages]);
 
   return (
     <>

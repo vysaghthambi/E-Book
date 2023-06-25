@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import AddPage from "../components/AddPage";
 import Pages from "../components/Pages";
@@ -16,6 +16,7 @@ export default function AppRouter() {
           <Route path=":pageId/edit" element={<EditPage />} />
         </Route>
         <Route path="add" element={<AddPage />} />
+        <Route path="*" element={<Navigate to="pages" />} />
       </Routes>
     </Suspense>
   )

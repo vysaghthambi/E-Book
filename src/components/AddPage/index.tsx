@@ -32,8 +32,8 @@ export default function AddPage() {
   }, []);
 
   return (
-    <>
+    <div className="flex-fill bg-white">
       <PageForm defaultValues={defaultValues} onSubmit={onSubmit} />
-    </>
+    </div>
   );
 }

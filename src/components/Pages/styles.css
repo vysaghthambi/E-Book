@@ -1,3 +1,9 @@
 .pagelist {
   width: 250px;
 }
+
+.left-container,
+.right-container {
+  box-shadow: 3px 0 6px #98989829;
+  border-radius: 4px;
+}

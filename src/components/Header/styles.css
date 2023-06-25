@@ -1,0 +1,16 @@
+.navbar-contain {
+  padding: 20px 0px !important;
+}
+
+.navbar-brand {
+  font: normal normal 700 25px/27px Roboto;
+}
+
+.username {
+  font: normal normal 700 14px/17px Roboto;
+}
+
+.dropdown-menu[data-bs-popper] {
+  position: absolute;
+  left: -100%;
+}
