@@ -3,6 +3,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { useNavigate } from "react-router-dom";
 
 import { PageType } from "../../types"
+import { usePages } from "../Pages";
 
 export type PageFormPropType = {
     defaultValues: PageType;
@@ -12,6 +13,8 @@ export type PageFormPropType = {
 export default function PageForm({ defaultValues, onSubmit }: PageFormPropType) {
     const [title, setTitle] = useState<string>(defaultValues.title);
     const [content, setContent] = useState<string>(defaultValues.content);
+
+    const { handlePageUpdate } = usePages();
 
     const navigate = useNavigate();
 
@@ -37,11 +40,12 @@ export default function PageForm({ defaultValues, onSubmit }: PageFormPropType) 
         onSubmit(data)
             .then((res) => {
                 console.log(res);
+                handlePageUpdate();
                 handleBack();
             })
             .catch((err) => console.error("Unable to add page", err));
 
-    }, [content, defaultValues, handleBack, onSubmit, title])
+    }, [content, defaultValues, handleBack, handlePageUpdate, onSubmit, title])
 
     return (
         <form onSubmit={handleSubmit}>

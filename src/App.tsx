@@ -6,11 +6,11 @@ import './App.css';
 
 function App() {
   return (
-    <div>
+    <div className="h-100 d-flex flex-column">
       <Header />
-      <div className="container mt-4">
+      <main className="d-flex flex-column flex-fill main-content-container bg-body-tertiary">
         <Outlet />
-      </div>
+      </main>
     </div>
   );
 }
