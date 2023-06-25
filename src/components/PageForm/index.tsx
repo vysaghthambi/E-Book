@@ -7,9 +7,10 @@ import { PageType } from "../../types"
 export type PageFormPropType = {
     defaultValues: PageType;
     onSubmit: (data: PageType) => Promise<unknown>;
+    handleBack: VoidFunction;
 }
 
-export default function PageForm({ defaultValues, onSubmit }: PageFormPropType) {
+export default function PageForm({ defaultValues, onSubmit, handleBack }: PageFormPropType) {
     const [title, setTitle] = useState<string>(defaultValues.title);
     const [content, setContent] = useState<string>(defaultValues.content);
 
@@ -23,10 +24,6 @@ export default function PageForm({ defaultValues, onSubmit }: PageFormPropType) 
         setContent(content)
     }, [])
 
-    const handleBack = useCallback(() => {
-        navigate("/pages")
-    }, [navigate])
-
     const handleSubmit = useCallback(() => {
         const data: PageType = {
             ...defaultValues,
@@ -37,11 +34,11 @@ export default function PageForm({ defaultValues, onSubmit }: PageFormPropType) 
         onSubmit(data)
             .then((res) => {
                 console.log(res);
-                handleBack();
+                navigate(`/pages/${defaultValues.id}`);
             })
             .catch((err) => console.error("Unable to add page", err));
 
-    }, [content, defaultValues, handleBack, onSubmit, title])
+    }, [content, defaultValues, navigate, onSubmit, title])
 
     return (
         <form onSubmit={handleSubmit} className="w-100 h-100">

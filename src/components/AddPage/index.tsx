@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useCallback, useMemo } from "react";
 import { v4 as uuid } from "uuid";
 
@@ -5,9 +6,15 @@ import PageForm from "../PageForm";
 import { PAGES_ITEM, PageType } from "../../types";
 
 export default function AddPage() {
+  const navigate = useNavigate();
+
   const id = uuid();
 
   const defaultValues = useMemo<PageType>(() => ({ id, title: "", content: "" }), [id]);
+
+  const handleBack = useCallback(() => {
+    navigate("/pages");
+  }, [navigate])
 
   const onSubmit = useCallback((data: PageType) => {
     return new Promise((resolve, reject) => {
@@ -33,7 +40,7 @@ export default function AddPage() {
 
   return (
     <div className="flex-fill bg-white">
-      <PageForm defaultValues={defaultValues} onSubmit={onSubmit} />
+      <PageForm defaultValues={defaultValues} onSubmit={onSubmit} handleBack={handleBack} />
     </div>
   );
 }
