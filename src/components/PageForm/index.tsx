@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react"
 import { Editor } from "@tinymce/tinymce-react";
 import { useNavigate } from "react-router-dom";
 
-import { PageType } from "../../types"
+import { API_KEY, PageType } from "../../types"
 
 export type PageFormPropType = {
     defaultValues: PageType;
@@ -52,8 +52,9 @@ export default function PageForm({ defaultValues, onSubmit, handleBack }: PageFo
                             name="title"
                             value={title}
                             onChange={handleTitleChange}
-                            className="w-100"
+                            className="w-100 input-group-lg"
                             placeholder="Page Title"
+                            autoComplete="off"
                             required
                         />
                     </div>
@@ -61,6 +62,7 @@ export default function PageForm({ defaultValues, onSubmit, handleBack }: PageFo
 
                 <div className="form-group flex-fill mb-4">
                     <Editor
+                        apiKey={API_KEY}
                         value={content}
                         onEditorChange={handleContentChange}
                         init={{ height: "100%" }}
