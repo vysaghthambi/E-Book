@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react"
+import { createContext, useCallback, useContext, useMemo, useState } from "react"
 import { Outlet } from "react-router-dom";
 
 import { PAGES_ITEM, PageType } from "../../types"
@@ -19,23 +19,22 @@ export function usePages() {
 }
 
 export default function Pages() {
-  const [pages, setPages] = useState<PageType[] | null>(null);
   const [pageUpdated, setPageUpdated] = useState<boolean>(false);
 
   const handlePageUpdate = useCallback(() => {
     setPageUpdated(prev => !prev)
   }, [])
 
-  useEffect(() => {
+  const pages = useMemo<PageType[]>(() => {
     const storedPages = localStorage.getItem(PAGES_ITEM);
 
-    if (!storedPages) {
-      setPages([]);
-      return;
-    };
+    if (!storedPages) return [];
 
     const parsedData = JSON.parse(storedPages);
-    setPages(parsedData ? parsedData : []);
+
+    return parsedData ? parsedData : [];
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageUpdated]);
 
   const pagesMap = useMemo(() => {
